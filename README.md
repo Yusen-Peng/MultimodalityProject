@@ -1,6 +1,15 @@
 # MultimodalityProject
 
-## Dynamic-Pooling Transformer
+## CLIP (2021)
+
+CLIP architecture: [CLIP](docs/CLIP.png)
+
+CLIP uses the following text encoder and image encoder:
+
+1. text encoder: a standard transformer (attention is all you need)
+2. image encoder: ResNet; ViT
+
+## Dynamic Token Pooling (2022)
 
 Motivations:
 
@@ -10,19 +19,17 @@ Motivations:
 
 DPT architecture: [DPT](docs/DPT.png)
 
-neural boundary predictor: it's a sequences of 1s and 0s (1 represents a boundary), implemented as MLP; it can effectively replace **off-the-shelf** tokenizers (BPE, Unigram) since they are inconsistent during autoregressive inference.
+neural boundary predictor: it's a sequences of 1s and 0s (1 represents a boundary), implemented as 2-layer MLP; it can effectively replace **off-the-shelf** tokenizers (BPE, Unigram) since they are inconsistent during autoregressive inference.
 
-The neural boundary predictor can be learned upon one of the following training objectives:
+The neural boundary predictor can be learned upon the following objectives:
 
-1. end-to-end based on the model perplexity
-2. tokenization as supervision with Unigram
+1. main objective: **end-to-end** training based on the model perplexity
+2. auxiliary objective: tokenization as supervision with Unigram
 3. spikes of conditional entropy (reasoning: Empirically, entropy spikes in language models overlap with word boundaries to a significant degree)
-4. linguistically inspired segments ()
+4. linguistically inspired segments (we put a boundary after a whitespace character - no need to train)
 
-## CLIP review
+## My brainstormed project ideas
 
-## My brainstormed list
+### DTP-CLIP
 
-1. CLIP-variants
-   1. ww
-2. others
+DTP-CLIP: use dynamic token pooling for image and text encoders in CLIP to boost efficiency (potentially we combine it with mini-techniques like quantization, pruning, or distillation, etc.)
